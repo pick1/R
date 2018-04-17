@@ -1,0 +1,71 @@
+---
+title: "Diamonds"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r Diamonds}
+summary(diamonds)
+```
+```{r}
+qplot(x = price, data = diamonds, binwidth = 30, xlim = c(0,5000))
+
+```
+```{r}
+qplot(x=price, data = diamonds, binwidth = 1,)+
+  facet_wrap(~cut, scales ='free_y')
+```
+```{r}
+by(diamonds$price, diamonds$cut, min)
+
+by(diamonds$price, diamonds$color, median)
+
+
+```
+```{r}
+diamonds$price_per_carat <- NA
+diamonds$price_per_carat = diamonds$carat / diamonds$price
+
+diamonds$price_per_carat = factor(diamonds$price_per_carat)
+
+
+
+qplot(x = price/carat, data = diamonds, binwidth = .01) +
+  scale_x_log10() +
+  facet_grid(~cut)
+```
+```{r}
+qplot(x = color, y = price, data = diamonds,geom = 'boxplot',color = I('black'), fill = I('#f79420'))+coord_cartesian(ylim = c(670,10000))
+#ggsave('PriceCutHistogramOrange.png')
+```
+```{r}
+by(diamonds$price, diamonds$color, summary)
+```
+```{r, price_per_carat}
+qplot(x = color, y = price/carat, data = diamonds,geom = 'boxplot',color = I('black'), fill = I('#008080'),
+xlab = 'Diamond Color (D-J)',ylab = 'Price per Carat',)+
+  coord_cartesian(ylim = c(670,18690))
+#ggsave('pricePerCaratTeal.png')
+```
+```{r}
+qplot(x = carat, data = diamonds, geom='freqpoly', binwidth = 0.01)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
