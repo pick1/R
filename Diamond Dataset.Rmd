@@ -1,19 +1,19 @@
 ---
 title: "Diamonds"
+author: 'Derek Pickern'
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## Exploring Markdown and the Diamonds Dataset
 
-## R Markdown
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.>.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r Diamonds}
+Using the **Knit** button in RStudio generates a document that includes both content and cell output from any embedded R code chunks in the document.
+
+```{r} 
+diamonds <- data.frame(diamonds)
 summary(diamonds)
 ```
 ```{r}
@@ -26,19 +26,12 @@ qplot(x=price, data = diamonds, binwidth = 1,)+
 ```
 ```{r}
 by(diamonds$price, diamonds$cut, min)
-
-by(diamonds$price, diamonds$color, median)
-
-
 ```
 ```{r}
-diamonds$price_per_carat <- NA
-diamonds$price_per_carat = diamonds$carat / diamonds$price
+by(diamonds$price, diamonds$cut, max)
+```
 
-diamonds$price_per_carat = factor(diamonds$price_per_carat)
-
-
-
+```{r}
 qplot(x = price/carat, data = diamonds, binwidth = .01) +
   scale_x_log10() +
   facet_grid(~cut)
@@ -60,9 +53,9 @@ xlab = 'Diamond Color (D-J)',ylab = 'Price per Carat',)+
 qplot(x = carat, data = diamonds, geom='freqpoly', binwidth = 0.01)
 ```
 
-## Including Plots
+## Carat and Count
 
-You can also embed plots, for example:
+By adjusting the binwidth we see clusters of defined peaks. While the highest peaks appear at .3 and 1 carat, there are clear peaks 1.5 and as well as noticeable bumps at 2.5 and 3.
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
